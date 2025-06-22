@@ -1,0 +1,484 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="tr">\
+<head>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+    <title>YKS 100-150K B\'f6l\'fcm Se\'e7im Asistan\uc0\u305 </title>\
+    <script src="https://cdn.tailwindcss.com"></script>\
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>\
+    <!-- Chosen Palette: Warm Neutral Tones -->\
+    <!-- Application Structure Plan: A dashboard-style single-page application. A top-level filter for department categories (Engineering, Health, etc.). A grid of interactive cards for each department. Clicking a card updates a central detail view, which uses tabs to separate 'TR Jobs', 'AI Impact', and 'Intl. Opportunities'. A comparative Radar chart will dynamically show the selected department's strengths (scored 1-10 on the three main criteria) against the average for its category. This structure transforms a linear report into an exploratory tool, allowing for non-linear discovery and direct comparison, which is far more usable for a student weighing options. -->\
+    <!-- Visualization & Content Choices: \
+        - Department Categories: Report Sections -> Goal: Organize/Filter -> Presentation: Filter Buttons -> Interaction: Click to filter card grid -> Justification: Allows user to focus on their primary area of interest. -> Library/Method: HTML/JS.\
+        - Department Overview: Report Department List -> Goal: Inform/Compare -> Presentation: Interactive Cards -> Interaction: Click to view details -> Justification: Provides a scannable overview of all options. -> Library/Method: HTML/Tailwind/JS.\
+        - Department Comparison: My own synthesized data from the report text -> Goal: Compare -> Presentation: Radar Chart -> Interaction: Dynamically updates on card click -> Justification: Visually summarizes a department's strengths across key decision criteria (jobs, AI future, intl. scope), enabling quick comparison. -> Library/Method: Chart.js (Canvas).\
+        - Detailed Analysis: Report's detailed text for each department -> Goal: Inform -> Presentation: Tabbed Content Area -> Interaction: Click tabs to switch views -> Justification: Breaks down dense information into manageable, context-specific chunks, preventing information overload. -> Library/Method: HTML/Tailwind/JS.\
+    -->\
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->\
+    <style>\
+        body \{\
+            background-color: #f8f7f4;\
+            color: #333;\
+            font-family: 'Inter', sans-serif;\
+        \}\
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');\
+        .active-filter \{\
+            background-color: #0891b2 !important;\
+            color: #ffffff !important;\
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);\
+        \}\
+        .active-tab \{\
+            border-bottom-color: #0891b2;\
+            color: #0e7490;\
+            font-weight: 600;\
+        \}\
+        .chart-container \{\
+            position: relative;\
+            width: 100%;\
+            max-width: 500px;\
+            margin-left: auto;\
+            margin-right: auto;\
+            height: 300px;\
+            max-height: 400px;\
+        \}\
+        @media (min-width: 768px) \{\
+            .chart-container \{\
+                height: 350px;\
+            \}\
+        \}\
+        .card \{\
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;\
+        \}\
+        .card:hover \{\
+            transform: translateY(-5px);\
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);\
+        \}\
+        .detail-section \{\
+            min-height: 500px;\
+        \}\
+    </style>\
+</head>\
+<body class="bg-stone-50 text-slate-800">\
+\
+    <div class="container mx-auto p-4 md:p-8">\
+\
+        <header class="text-center mb-10">\
+            <h1 class="text-3xl md:text-5xl font-bold text-cyan-800">Gelece\uc0\u287 in Kariyer Rehberi</h1>\
+            <p class="text-md md:text-lg text-slate-600 mt-2">YKS 100.000 - 150.000 (SAY) S\uc0\u305 ralamas\u305  \u304 \'e7in \u304 nteraktif B\'f6l\'fcm Analizi</p>\
+        </header>\
+\
+        <section id="introduction" class="mb-12 bg-white p-6 rounded-lg shadow-sm">\
+             <h2 class="text-2xl font-bold text-cyan-700 mb-3">Do\uc0\u287 ru Tercihe Giden Yol</h2>\
+             <p class="text-slate-600 leading-relaxed">\
+                Bu rehber, YKS'de 100.000 ile 150.000 aras\uc0\u305 nda bir ba\u351 ar\u305  s\u305 ralamas\u305  elde eden \'f6\u287 renciler i\'e7in stratejik bir b\'f6l\'fcm se\'e7imi yapmalar\u305 na yard\u305 mc\u305  olmak amac\u305 yla tasarlanm\u305 \u351 t\u305 r. Sunulan b\'f6l\'fcmler, sadece bug\'fcn\'fcn pop\'fclerli\u287 ine g\'f6re de\u287 il, ayn\u305  zamanda gelece\u287 in i\u351  d\'fcnyas\u305  trendleri, yapay zekan\u305 n meslekler \'fczerindeki d\'f6n\'fc\u351 t\'fcr\'fcc\'fc etkisi ve uluslararas\u305  kariyer f\u305 rsatlar\u305  gibi kritik fakt\'f6rler g\'f6z \'f6n\'fcnde bulundurularak analiz edilmi\u351 tir. A\u351 a\u287 \u305 daki filtreleri kullanarak alanlar\u305  ke\u351 fedebilir, kartlara t\u305 klayarak b\'f6l\'fcmlerin detayl\u305  analizlerini ve kar\u351 \u305 la\u351 t\u305 rmal\u305  grafiklerini inceleyebilirsiniz.\
+             </p>\
+        </section>\
+\
+\
+        <main>\
+            <div id="filters" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">\
+                <button data-filter="all" class="filter-btn active-filter py-2 px-5 bg-white text-slate-700 rounded-full shadow-sm font-medium transition-all duration-200 hover:bg-cyan-500 hover:text-white">T\'fcm\'fc</button>\
+                <button data-filter="M\'fchendislik" class="filter-btn py-2 px-5 bg-white text-slate-700 rounded-full shadow-sm font-medium transition-all duration-200 hover:bg-cyan-500 hover:text-white">M\'fchendislik</button>\
+                <button data-filter="Sa\uc0\u287 l\u305 k Bilimleri" class="filter-btn py-2 px-5 bg-white text-slate-700 rounded-full shadow-sm font-medium transition-all duration-200 hover:bg-cyan-500 hover:text-white">Sa\u287 l\u305 k Bilimleri</button>\
+                <button data-filter="Temel Bilimler ve \'d6\uc0\u287 retmenlik" class="filter-btn py-2 px-5 bg-white text-slate-700 rounded-full shadow-sm font-medium transition-all duration-200 hover:bg-cyan-500 hover:text-white">Temel Bilimler ve \'d6\u287 retmenlik</button>\
+            </div>\
+\
+            <section id="department-details" class="detail-section mb-12 bg-white p-6 md:p-8 rounded-lg shadow-md transition-opacity duration-500 opacity-0">\
+                <div id="detail-content" class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">\
+                    <div id="chart-and-info">\
+                        <h2 id="detail-title" class="text-3xl font-bold text-cyan-800 mb-4">B\'f6l\'fcm Se\'e7iniz</h2>\
+                        <p id="detail-intro" class="text-slate-600 mb-6">Kar\uc0\u351 \u305 la\u351 t\u305 rma ve detayl\u305  analiz i\'e7in l\'fctfen a\u351 a\u287 \u305 daki kartlardan bir b\'f6l\'fcm se\'e7in.</p>\
+                        <div class="chart-container">\
+                            <canvas id="departmentChart"></canvas>\
+                        </div>\
+                    </div>\
+                    <div id="analysis-content">\
+                        <div class="border-b border-slate-200 mb-4">\
+                            <nav class="-mb-px flex space-x-6" aria-label="Tabs">\
+                                <button data-tab="tr" class="tab-btn whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-slate-500 hover:text-cyan-600 hover:border-cyan-300">\uc0\u304 \u351  \u304 mkanlar\u305  (TR)</button>\
+                                <button data-tab="ai" class="tab-btn whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-slate-500 hover:text-cyan-600 hover:border-cyan-300">Yapay Zeka Etkisi</button>\
+                                <button data-tab="intl" class="tab-btn whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm text-slate-500 hover:text-cyan-600 hover:border-cyan-300">Yurt D\uc0\u305 \u351 \u305  F\u305 rsatlar\u305 </button>\
+                            </nav>\
+                        </div>\
+                        <div id="tab-content" class="text-slate-600 leading-relaxed text-sm">\
+                            Analiz i\'e7eri\uc0\u287 i burada g\'f6r\'fcnt\'fclenecektir.\
+                        </div>\
+                    </div>\
+                </div>\
+            </section>\
+            \
+            <section id="department-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">\
+            </section>\
+\
+        </main>\
+    </div>\
+\
+    <script>\
+        const departmentData = [\
+            \{\
+                id: 'bilgisayar_muh',\
+                name: 'Bilgisayar M\'fchendisli\uc0\u287 i',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "T\'fcrkiye'de yaz\uc0\u305 l\u305 m geli\u351 tirici, veri analisti, siber g\'fcvenlik uzman\u305 , yapay zeka m\'fchendisi gibi \'e7ok geni\u351  bir yelpazede, y\'fcksek talep g\'f6ren i\u351  imkanlar\u305  sunar. Bankac\u305 l\u305 ktan savunma sanayine kadar hemen her sekt\'f6rde \'e7al\u305 \u351 ma olana\u287 \u305  vard\u305 r. Kendi \u351 irketini kurma ve freelance \'e7al\u305 \u351 ma potansiyeli y\'fcksektir.",\
+                    ai: "Bu b\'f6l\'fcm yapay zekan\uc0\u305 n tam merkezindedir. YZ, kodlama gibi rutin i\u351 leri otomatikle\u351 tirerek verimlili\u287 i art\u305 r\u305 r ve m\'fchendislerin daha karma\u351 \u305 k, yarat\u305 c\u305  problemlere odaklanmas\u305 n\u305  sa\u287 lar. Mesle\u287 i ortadan kald\u305 rmaz, aksine d\'f6n\'fc\u351 t\'fcr\'fcr ve yeni uzmanl\u305 k alanlar\u305  (\'f6rn. YZ M\'fchendisli\u287 i) yarat\u305 r. Gelece\u287 e uyumu \'e7ok y\'fcksektir.",\
+                    intl: "K\'fcresel olarak en \'e7ok aranan mesleklerden biridir. \'d6zellikle Avrupa (Almanya, Hollanda) ve Kuzey Amerika'da b\'fcy\'fck f\uc0\u305 rsatlar sunar. Uzaktan \'e7al\u305 \u351 ma imkanlar\u305 n\u305 n yayg\u305 nla\u351 mas\u305 yla dil bariyeri daha az sorun te\u351 kil eder. Uluslararas\u305  kariyer potansiyeli \'e7ok y\'fcksektir."\
+                \},\
+                scores: \{ tr: 9, ai: 10, intl: 10 \}\
+            \},\
+            \{\
+                id: 'yazilim_muh',\
+                name: 'Yaz\uc0\u305 l\u305 m M\'fchendisli\u287 i',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "Bilgisayar m\'fchendisli\uc0\u287 ine \'e7ok benzer \u351 ekilde, T\'fcrkiye'de yaz\u305 l\u305 m geli\u351 tirme, web/mobil uygulama, oyun geli\u351 tirme gibi alanlarda geni\u351  i\u351  olanaklar\u305  bulunur. \'d6zellikle teknoloji odakl\u305  \u351 irketlerde, start-up'larda ve e-ticaret sekt\'f6r\'fcnde talep y\'fcksektir.",\
+                    ai: "Yapay zeka, yaz\uc0\u305 l\u305 m geli\u351 tirme ya\u351 am d\'f6ng\'fcs\'fcn\'fc (SDLC) k\'f6kten de\u287 i\u351 tirmektedir. Kod tamamlama, test otomasyonu ve hata ay\u305 klama gibi s\'fcre\'e7leri h\u305 zland\u305 r\u305 r. YZ becerilerine sahip yaz\u305 l\u305 m m\'fchendisleri gelecekte daha da de\u287 erli olacakt\u305 r. Meslek i\'e7in bir tehdit de\u287 il, g\'fc\'e7l\'fc bir yard\u305 mc\u305 d\u305 r.",\
+                    intl: "T\uc0\u305 pk\u305  bilgisayar m\'fchendisli\u287 i gibi, uluslararas\u305  alanda ge\'e7erlili\u287 i en y\'fcksek mesleklerdendir. Dil bilgisi ve g\'fcncel teknolojilere hakimiyet ile d\'fcnyan\u305 n her yerinde i\u351  bulma ve uzaktan \'e7al\u305 \u351 ma imkan\u305  sunar."\
+                \},\
+                scores: \{ tr: 9, ai: 10, intl: 10 \}\
+            \},\
+            \{\
+                id: 'ai_veri_muh',\
+                name: 'Yapay Zeka ve Veri M\'fch.',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "Gelece\uc0\u287 in en pop\'fcler alanlar\u305 ndan biri olarak T\'fcrkiye'de h\u305 zla b\'fcy\'fcmektedir. Veri bilimcisi, makine \'f6\u287 renmesi m\'fchendisi, yapay zeka uzman\u305  gibi pozisyonlarda bankac\u305 l\u305 k, e-ticaret, sa\u287 l\u305 k ve \'fcretim sekt\'f6rlerinde y\'fcksek talep g\'f6rmektedir.",\
+                    ai: "B\'f6l\'fcm\'fcn kendisi yapay zekad\uc0\u305 r. Mezunlar\u305 , YZ sistemlerini tasarlayan, geli\u351 tiren ve uygulayan ki\u351 ilerdir. Dolay\u305 s\u305 yla YZ taraf\u305 ndan ortadan kalkma riski s\u305 f\u305 rd\u305 r; aksine, YZ'nin geli\u351 imini y\'f6nlendiren meslektir.",\
+                    intl: "K\'fcresel teknoloji pazar\uc0\u305 n\u305 n en s\u305 cak alan\u305 d\u305 r. Avrupa ve ABD'deki teknoloji devleri ve start-up'lar bu alandaki yetenekler i\'e7in yo\u287 un bir rekabet i\'e7indedir. Uluslararas\u305  f\u305 rsatlar ve maa\u351  potansiyeli \'e7ok y\'fcksektir."\
+                \},\
+                scores: \{ tr: 9, ai: 10, intl: 10 \}\
+            \},\
+            \{\
+                id: 'ee_muh',\
+                name: 'Elektrik-Elektronik M\'fch.',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "Enerji, telekom\'fcnikasyon, otomasyon, savunma sanayi ve elektronik cihaz \'fcretimi gibi temel sekt\'f6rlerde geni\uc0\u351  i\u351  imkanlar\u305  sunar. Hem donan\u305 m hem de yaz\u305 l\u305 m taraf\u305 nda uzmanla\u351 ma f\u305 rsat\u305  vard\u305 r.",\
+                    ai: "Yapay zeka, devre tasar\uc0\u305 m\u305 , sinyal i\u351 leme, enerji \u351 ebekesi optimizasyonu ve kestirimci bak\u305 m gibi alanlarda m\'fchendislerin i\u351 ini kolayla\u351 t\u305 r\u305 r ve daha verimli sistemler tasarlamalar\u305 n\u305  sa\u287 lar. \'d6zellikle G\'f6m\'fcl\'fc Sistemler ve IoT alanlar\u305 nda YZ bilgisi b\'fcy\'fck avantajd\u305 r.",\
+                    intl: "Temel bir m\'fchendislik dal\uc0\u305  oldu\u287 u i\'e7in uluslararas\u305  ge\'e7erlili\u287 i vard\u305 r. \'d6zellikle otomasyon, yenilenebilir enerji ve yar\u305  iletken end\'fcstrilerinde (\'f6rn. Almanya, ABD) kariyer f\u305 rsatlar\u305  bulunur."\
+                \},\
+                scores: \{ tr: 8, ai: 8, intl: 7 \}\
+            \},\
+            \{\
+                id: 'makine_muh',\
+                name: 'Makine M\'fchendisli\uc0\u287 i',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "\uc0\u304 malat, otomotiv, savunma, enerji ve havac\u305 l\u305 k gibi \'e7ok \'e7e\u351 itli sekt\'f6rlerde \'fcretim, tasar\u305 m, AR-GE ve kalite kontrol gibi alanlarda temel bir rol oynar. \u304 \u351  bulma imkan\u305  geni\u351 tir.",\
+                    ai: "YZ, tasar\uc0\u305 m s\'fcre\'e7lerini (\'fcretken tasar\u305 m), \'fcretim hatlar\u305 nda otomasyonu ve kalite kontrol\'fc (g\'f6r\'fcnt\'fc i\u351 leme ile) geli\u351 tirir. Rutin tasar\u305 m ve analiz i\u351 lerini otomatikle\u351 tirebilir, ancak karma\u351 \u305 k problem \'e7\'f6zme ve yarat\u305 c\u305 l\u305 k gerektiren g\'f6revler m\'fchendise kal\u305 r. YZ'yi kullanabilen makine m\'fchendisleri \'f6ne \'e7\u305 kar.",\
+                    intl: "Klasik ve evrensel bir m\'fchendislik dal\uc0\u305 d\u305 r. \'d6zellikle Almanya gibi sanayisi g\'fc\'e7l\'fc \'fclkelerde ve otomotiv, havac\u305 l\u305 k gibi sekt\'f6rlerde uluslararas\u305  i\u351  imkanlar\u305  mevcuttur. Proje bazl\u305  olarak yurt d\u305 \u351 \u305 nda \'e7al\u305 \u351 ma f\u305 rsatlar\u305  s\u305 kt\u305 r."\
+                \},\
+                scores: \{ tr: 8, ai: 7, intl: 7 \}\
+            \},\
+            \{\
+                id: 'mimarlik',\
+                name: 'Mimarl\uc0\u305 k',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "\uc0\u304 n\u351 aat sekt\'f6r\'fcne ba\u287 l\u305  olarak de\u287 i\u351 kenlik g\'f6sterse de mimarl\u305 k ofisleri, in\u351 aat \u351 irketleri ve kamu kurumlar\u305 nda i\u351  olanaklar\u305  mevcuttur. Rekabetin yo\u287 un oldu\u287 u bir aland\u305 r. Kendi ofisini a\'e7ma potansiyeli vard\u305 r.",\
+                    ai: "YZ, \'e7izim, planlama ve render gibi zaman al\uc0\u305 c\u305  s\'fcre\'e7leri h\u305 zland\u305 r\u305 r. S\'fcrd\'fcr\'fclebilir ve verimli tasar\u305 mlar i\'e7in veri analizi yapar. Ancak yarat\u305 c\u305 l\u305 k, estetik anlay\u305 \u351  ve insan odakl\u305  tasar\u305 m gibi konularda mimar\u305 n rol\'fc vazge\'e7ilmezdir. YZ, bir ara\'e7 olarak mimar\u305 n yeteneklerini g\'fc\'e7lendirir.",\
+                    intl: "Uluslararas\uc0\u305  standartlara ve dillere hakim, g\'fc\'e7l\'fc bir portfolyoya sahip mimarlar i\'e7in yurt d\u305 \u351 \u305 nda, \'f6zellikle geli\u351 mi\u351  \'fclkelerde ve K\'f6rfez \'fclkelerinde f\u305 rsatlar bulunmaktad\u305 r. Ancak yerel y\'f6netmeliklere hakimiyet ve denklik s\'fcre\'e7leri \'f6nemlidir."\
+                \},\
+                scores: \{ tr: 6, ai: 6, intl: 6 \}\
+            \},\
+            \{\
+                id: 'insaat_muh',\
+                name: '\uc0\u304 n\u351 aat M\'fchendisli\u287 i',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "Altyap\uc0\u305 , \'fcstyap\u305 , ula\u351 t\u305 rma ve hidrolik gibi alanlarda hem kamuda hem \'f6zel sekt\'f6rde i\u351  imkanlar\u305  bulunur. Sekt\'f6r, ekonomik d\'f6ng\'fclerden etkilenebilir. \u350 antiye ve ofis ortam\u305 nda \'e7al\u305 \u351 ma se\'e7enekleri vard\u305 r.",\
+                    ai: "YZ, proje planlama, risk analizi, maliyet tahmini ve \uc0\u351 antiye g\'fcvenli\u287 i gibi alanlarda verimlili\u287 i art\u305 r\u305 r. Robotik ve drone teknolojileri ile entegre olarak kullan\u305 l\u305 r. Rutin hesaplama ve denetim i\u351 lerini devralabilir, ancak stratejik karar verme ve proje y\'f6netimi insanda kal\u305 r.",\
+                    intl: "B\'fcy\'fck uluslararas\uc0\u305  in\u351 aat \u351 irketlerinde, \'f6zellikle altyap\u305  projelerinde (Orta Do\u287 u, Afrika, Orta Asya) \'f6nemli kariyer f\u305 rsatlar\u305  sunar. Proje bazl\u305  ve uzun s\'fcreli yurt d\u305 \u351 \u305  g\'f6revleri yayg\u305 nd\u305 r."\
+                \},\
+                scores: \{ tr: 7, ai: 6, intl: 8 \}\
+            \},\
+            \{\
+                id: 'malzeme_muh',\
+                name: 'Metalurji ve Malzeme M\'fch.',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "Demir-\'e7elik, otomotiv, savunma, seramik, cam ve polimer gibi \'fcretim sekt\'f6rlerinin temelini olu\uc0\u351 turur. AR-GE, \'fcretim ve kalite kontrol alanlar\u305 nda uzmanla\u351 m\u305 \u351  personel ihtiyac\u305  her zaman vard\u305 r. Ni\u351  ama \'f6nemli bir aland\u305 r.",\
+                    ai: "YZ, yeni malzemelerin ke\uc0\u351 fedilmesi ve mevcut malzemelerin \'f6zelliklerinin iyile\u351 tirilmesi s\'fcrecini inan\u305 lmaz derecede h\u305 zland\u305 r\u305 r. Sim\'fclasyonlar ve veri analizi yoluyla, y\u305 llar s\'fcrebilecek ara\u351 t\u305 rmalar\u305  k\u305 salt\u305 r. Bu alanda YZ, bir devrim yaratma potansiyeline sahiptir.",\
+                    intl: "\uc0\u304 leri teknoloji malzemeler (kompozitler, nanomalzemeler) geli\u351 tiren \'fclkelerde (Almanya, Japonya, ABD) ve b\'fcy\'fck \'fcretim tesislerinde AR-GE ve \'fcretim pozisyonlar\u305 nda i\u351  imkanlar\u305  bulunur. Uzmanl\u305 k gerektiren bir alan oldu\u287 u i\'e7in uluslararas\u305  talep g\'f6rebilir."\
+                \},\
+                scores: \{ tr: 7, ai: 8, intl: 7 \}\
+            \},\
+            \{\
+                id: 'enerji_muh',\
+                name: 'Enerji Sistemleri M\'fch.',\
+                category: 'M\'fchendislik',\
+                analysis: \{\
+                    tr: "Yenilenebilir enerji (g\'fcne\uc0\u351 , r\'fczgar) ve geleneksel enerji kaynaklar\u305  \'fczerine \'e7al\u305 \u351 an \u351 irketlerde, enerji verimlili\u287 i dan\u305 \u351 manl\u305 k firmalar\u305 nda ve kamu kurumlar\u305 nda (EPDK, TE\u304 A\u350 ) artan bir talep g\'f6rmektedir. Gelece\u287 i parlak bir aland\u305 r.",\
+                    ai: "YZ, enerji t\'fcketimini tahmin etme, enerji \uc0\u351 ebekelerini (ak\u305 ll\u305  \u351 ebekeler) optimize etme ve enerji \'fcretim tesislerinde kestirimci bak\u305 m yapma konular\u305 nda kritik rol oynar. Enerji verimlili\u287 ini ve g\'fcvenli\u287 ini art\u305 r\u305 r. YZ, bu alan\u305 n vazge\'e7ilmez bir par\'e7as\u305 d\u305 r.",\
+                    intl: "K\'fcresel iklim de\uc0\u287 i\u351 ikli\u287 iyle m\'fccadele kapsam\u305 nda, yenilenebilir enerji ve enerji verimlili\u287 i t\'fcm d\'fcnyada en \'f6nemli g\'fcndem maddelerindendir. Bu alandaki uzmanlar i\'e7in \'f6zellikle Avrupa'da (Almanya, Danimarka) geni\u351  kariyer f\u305 rsatlar\u305  mevcuttur."\
+                \},\
+                scores: \{ tr: 8, ai: 9, intl: 8 \}\
+            \},\
+            \{\
+                id: 'hemsirelik',\
+                name: 'Hem\uc0\u351 irelik',\
+                category: 'Sa\uc0\u287 l\u305 k Bilimleri',\
+                analysis: \{\
+                    tr: "Hem kamu hem de \'f6zel hastanelerde, aile sa\uc0\u287 l\u305 \u287 \u305  merkezlerinde ve di\u287 er sa\u287 l\u305 k kurulu\u351 lar\u305 nda s\'fcrekli ve y\'fcksek bir istihdam oran\u305 na sahiptir. Uzmanla\u351 ma (yo\u287 un bak\u305 m, onkoloji vb.) ile kariyer geli\u351 imi m\'fcmk\'fcnd\'fcr.",\
+                    ai: "YZ, hasta verilerini analiz ederek erken te\uc0\u351 hise yard\u305 mc\u305  olur, hasta takip s\'fcre\'e7lerini otomatikle\u351 tirir ve hem\u351 irelerin idari y\'fck\'fcn\'fc azalt\u305 r. Ancak hasta bak\u305 m\u305 , empati ve fiziksel m\'fcdahale gibi temel g\'f6revler insana dayal\u305 d\u305 r. YZ, hem\u351 irenin i\u351 ini elinden almaz, aksine ona destek olur ve bak\u305 m kalitesini art\u305 r\u305 r.",\
+                    intl: "T\'fcm d\'fcnyada sa\uc0\u287 l\u305 k personeli ihtiyac\u305  y\'fcksektir. Hem\u351 irelik, dil yeterlili\u287 i ve denklik s\'fcre\'e7leri tamamland\u305 \u287 \u305 nda yurt d\u305 \u351 \u305 nda (\'f6zellikle Avrupa, Kanada, Avustralya) kolayca i\u351  bulunabilecek mesleklerin ba\u351 \u305 nda gelir."\
+                \},\
+                scores: \{ tr: 10, ai: 5, intl: 9 \}\
+            \},\
+            \{\
+                id: 'beslenme_diyetetik',\
+                name: 'Beslenme ve Diyetetik',\
+                category: 'Sa\uc0\u287 l\u305 k Bilimleri',\
+                analysis: \{\
+                    tr: "Artan sa\uc0\u287 l\u305 k bilinciyle birlikte hastaneler, spor merkezleri, catering \u351 irketleri ve \'f6zel dan\u305 \u351 manl\u305 k ofislerinde i\u351  imkanlar\u305  artmaktad\u305 r. Kendi i\u351 ini kurma potansiyeli y\'fcksektir.",\
+                    ai: "YZ, ki\uc0\u351 isel verileri (genetik, ya\u351 am tarz\u305 ) analiz ederek ki\u351 iye \'f6zel beslenme planlar\u305  olu\u351 turabilir. Giyilebilir teknolojilerle entegre olarak dan\u305 \u351 an takibini kolayla\u351 t\u305 r\u305 r. Diyetisyenin rol\'fc, YZ'nin \'fcretti\u287 i veriyi yorumlamak ve dan\u305 \u351 ana rehberlik etmek y\'f6n\'fcnde evrilecektir.",\
+                    intl: "Geli\uc0\u351 mi\u351  \'fclkelerde koruyucu sa\u287 l\u305 k hizmetlerine verilen \'f6nem nedeniyle talep vard\u305 r. Ancak mesle\u287 i icra etmek i\'e7in genellikle o \'fclkenin denklik ve lisanslama \u351 artlar\u305 n\u305  yerine getirmek gerekir. Do\u287 rudan ge\'e7i\u351  di\u287 er alanlara g\'f6re daha zordur."\
+                \},\
+                scores: \{ tr: 7, ai: 6, intl: 5 \}\
+            \},\
+            \{\
+                id: 'fizyoterapi',\
+                name: 'Fizyoterapi ve Rehabilitasyon',\
+                category: 'Sa\uc0\u287 l\u305 k Bilimleri',\
+                analysis: \{\
+                    tr: "Hastaneler, rehabilitasyon merkezleri, spor kul\'fcpleri ve \'f6zel kliniklerde geni\uc0\u351  i\u351  olanaklar\u305  bulunur. Ya\u351 lanan n\'fcfus ve spor yaralanmalar\u305 n\u305 n artmas\u305 yla talebin devam etmesi beklenmektedir.",\
+                    ai: "YZ destekli sens\'f6rler ve kameralar, hastalar\uc0\u305 n egzersizleri do\u287 ru yap\u305 p yapmad\u305 \u287 \u305 n\u305  analiz ederek geri bildirim sa\u287 lar. Sanal ger\'e7eklik (VR) ile rehabilitasyon s\'fcre\'e7leri daha ilgi \'e7ekici hale getirilir. Robotik cihazlar, terapistlere destek olur. Fiziksel temas ve motivasyonel destek gibi insani unsurlar baki kalacakt\u305 r.",\
+                    intl: "Hem\uc0\u351 irelik gibi, sa\u287 l\u305 k personeli ihtiyac\u305  olan \'fclkelerde (Almanya, Kanada vb.) talep g\'f6ren bir meslektir. Dil ve denklik \u351 artlar\u305  sa\u287 land\u305 \u287 \u305 nda uluslararas\u305  kariyer m\'fcmk\'fcnd\'fcr."\
+                \},\
+                scores: \{ tr: 8, ai: 7, intl: 7 \}\
+            \},\
+            \{\
+                id: 'veterinerlik',\
+                name: 'Veteriner Hekimli\uc0\u287 i',\
+                category: 'Sa\uc0\u287 l\u305 k Bilimleri',\
+                analysis: \{\
+                    tr: "Klinikler, \'e7iftlikler, ila\'e7 firmalar\uc0\u305  ve g\u305 da kontrol merkezleri gibi \'e7e\u351 itli alanlarda i\u351  bulma imkan\u305  vard\u305 r. \'d6zellikle pet hayvanlar\u305 na y\'f6nelik hizmetlerde son y\u305 llarda b\'fcy\'fck bir art\u305 \u351  g\'f6zlenmektedir.",\
+                    ai: "YZ, r\'f6ntgen ve ultrason gibi medikal g\'f6r\'fcnt\'fcleri analiz ederek te\uc0\u351 hise yard\u305 mc\u305  olur. Hayvan s\'fcr\'fclerinde hastal\u305 klar\u305  erken tespit etmek i\'e7in kullan\u305 l\u305 r. YZ, veteriner hekimin te\u351 his ve tedavi s\'fcre\'e7lerinde \'f6nemli bir yard\u305 mc\u305 d\u305 r.",\
+                    intl: "Geli\uc0\u351 mi\u351  \'fclkelerde evcil hayvan sa\u287 l\u305 \u287 \u305 na verilen \'f6nem \'e7ok y\'fcksektir. Bu nedenle uzman veteriner hekimler i\'e7in (cerrahi, onkoloji vb.) iyi kariyer f\u305 rsatlar\u305  mevcuttur. Denklik ve dil yine \'f6ncelikli \u351 artlard\u305 r."\
+                \},\
+                scores: \{ tr: 8, ai: 6, intl: 6 \}\
+            \},\
+            \{\
+                id: 'matematik',\
+                name: 'Matematik',\
+                category: 'Temel Bilimler ve \'d6\uc0\u287 retmenlik',\
+                analysis: \{\
+                    tr: "Do\uc0\u287 rudan bir meslek unvan\u305  vermese de finans (bankac\u305 l\u305 k, sigortac\u305 l\u305 k), yaz\u305 l\u305 m ve veri analistli\u287 i gibi alanlarda g\'fc\'e7l\'fc bir temel olu\u351 turur. Formasyon ile \'f6\u287 retmenlik yap\u305 labilir. Akademik kariyer bir di\u287 er se\'e7enektir.",\
+                    ai: "Matematik, yapay zekan\uc0\u305 n temel dilidir. Bu b\'f6l\'fcm mezunlar\u305 , YZ'nin arkas\u305 ndaki algoritmalar\u305  anlama ve geli\u351 tirme potansiyeline sahiptir. Veri bilimi ve makine \'f6\u287 renmesi gibi alanlara y\'f6nelerek YZ devriminin bir par\'e7as\u305  olabilirler. Gelece\u287 e uyumu y\'fcksektir.",\
+                    intl: "G\'fc\'e7l\'fc analitik beceriler, evrensel olarak de\uc0\u287 erlidir. Finansal analist (quant), veri bilimci veya yaz\u305 l\u305 m geli\u351 tirici olarak uluslararas\u305  teknoloji ve finans \u351 irketlerinde i\u351  bulma potansiyeli y\'fcksektir. Ek uzmanl\u305 k ve programlama bilgisi gerektirir."\
+                \},\
+                scores: \{ tr: 7, ai: 9, intl: 8 \}\
+            \},\
+            \{\
+                id: 'bote',\
+                name: 'Bilgisayar ve \'d6\uc0\u287 retim Tekn. \'d6\u287 rt.',\
+                category: 'Temel Bilimler ve \'d6\uc0\u287 retmenlik',\
+                analysis: \{\
+                    tr: "MEB'e ba\uc0\u287 l\u305  okullarda bili\u351 im teknolojileri \'f6\u287 retmeni olarak atanabilirler. Ayr\u305 ca \'f6zel okullarda ve e\u287 itim teknolojileri (EdTech) geli\u351 tiren \u351 irketlerde e\u287 itim teknolo\u287 u, i\'e7erik geli\u351 tirici gibi rollerde \'e7al\u305 \u351 abilirler.",\
+                    ai: "YZ, ki\uc0\u351 iselle\u351 tirilmi\u351  \'f6\u287 renme platformlar\u305  tasarlamak i\'e7in bu b\'f6l\'fcm\'fcn uzmanl\u305 k alan\u305 yla do\u287 rudan ilgilidir. B\'d6TE mezunlar\u305 , YZ tabanl\u305  e\u287 itim yaz\u305 l\u305 mlar\u305 n\u305  geli\u351 tiren ekiplerde yer alabilir veya okullarda bu teknolojilerin entegrasyonunu sa\u287 layabilir. YZ, bu meslek i\'e7in bir f\u305 rsatt\u305 r.",\
+                    intl: "E\uc0\u287 itim teknolojileri (EdTech) k\'fcresel olarak b\'fcy\'fcyen bir sekt\'f6rd\'fcr. Bu alanda \'fcr\'fcn geli\u351 tiren uluslararas\u305  \u351 irketlerde veya uluslararas\u305  okullarda i\u351  imkanlar\u305  bulunabilir. Programlama ve YZ bilgisiyle bu potansiyel artar."\
+                \},\
+                scores: \{ tr: 7, ai: 8, intl: 6 \}\
+            \},\
+        ];\
+\
+        const grid = document.getElementById('department-grid');\
+        const detailSection = document.getElementById('department-details');\
+        const detailTitle = document.getElementById('detail-title');\
+        const detailIntro = document.getElementById('detail-intro');\
+        const tabContent = document.getElementById('tab-content');\
+        const filterButtons = document.querySelectorAll('.filter-btn');\
+        const tabButtons = document.querySelectorAll('.tab-btn');\
+\
+        let chart = null;\
+        let activeDepartment = null;\
+\
+        const categoryAverages = \{\
+            'M\'fchendislik': \{ tr: 8, ai: 8.4, intl: 8.1 \},\
+            'Sa\uc0\u287 l\u305 k Bilimleri': \{ tr: 8.3, ai: 6, intl: 6.8 \},\
+            'Temel Bilimler ve \'d6\uc0\u287 retmenlik': \{ tr: 7, ai: 8.5, intl: 7 \}\
+        \};\
+\
+        const createDepartmentCard = (dept) => \{\
+            const card = document.createElement('div');\
+            card.className = 'card bg-white p-5 rounded-lg shadow-md cursor-pointer';\
+            card.dataset.id = dept.id;\
+            card.innerHTML = `\
+                <h3 class="font-bold text-lg text-cyan-800">$\{dept.name\}</h3>\
+                <p class="text-sm text-slate-500">$\{dept.category\}</p>\
+                <div class="flex justify-around mt-4 text-xs text-center">\
+                    <div>\
+                        <span class="font-semibold block text-cyan-600">$\{dept.scores.tr\}/10</span>\
+                        <span class="text-slate-500">\uc0\u304 \u351  (TR)</span>\
+                    </div>\
+                    <div>\
+                        <span class="font-semibold block text-cyan-600">$\{dept.scores.ai\}/10</span>\
+                        <span class="text-slate-500">Gelecek</span>\
+                    </div>\
+                    <div>\
+                        <span class="font-semibold block text-cyan-600">$\{dept.scores.intl\}/10</span>\
+                        <span class="text-slate-500">Yurt D\uc0\u305 \u351 \u305 </span>\
+                    </div>\
+                </div>\
+            `;\
+            card.addEventListener('click', () => showDetails(dept.id));\
+            return card;\
+        \};\
+\
+        const renderDepartments = (filter = 'all') => \{\
+            grid.innerHTML = '';\
+            const filteredData = filter === 'all' \
+                ? departmentData \
+                : departmentData.filter(d => d.category === filter);\
+            \
+            filteredData.forEach(dept => \{\
+                const card = createDepartmentCard(dept);\
+                grid.appendChild(card);\
+            \});\
+        \};\
+\
+        const showDetails = (id) => \{\
+            activeDepartment = departmentData.find(d => d.id === id);\
+            if (!activeDepartment) return;\
+\
+            detailSection.style.opacity = '1';\
+            \
+            detailTitle.textContent = activeDepartment.name;\
+            detailIntro.textContent = `A\uc0\u351 a\u287 \u305 da $\{activeDepartment.name\} b\'f6l\'fcm\'fc i\'e7in detayl\u305  analiz ve kariyer potansiyel grafi\u287 ini bulabilirsiniz.`;\
+            \
+            document.querySelectorAll('.card').forEach(c => \{\
+                 c.style.border = c.dataset.id === id ? '2px solid #0891b2' : '2px solid transparent';\
+            \});\
+            \
+            updateChart();\
+            showTabContent('tr');\
+\
+            detailSection.scrollIntoView(\{ behavior: 'smooth', block: 'start' \});\
+        \};\
+        \
+        const showTabContent = (tabId) => \{\
+            if (!activeDepartment) return;\
+\
+            let contentKey;\
+            if (tabId === 'tr') contentKey = 'tr';\
+            else if (tabId === 'ai') contentKey = 'ai';\
+            else if (tabId === 'intl') contentKey = 'intl';\
+            \
+            tabContent.innerHTML = activeDepartment.analysis[contentKey];\
+            \
+            tabButtons.forEach(btn => \{\
+                if(btn.dataset.tab === tabId) \{\
+                    btn.classList.add('active-tab', 'border-cyan-600', 'text-cyan-700');\
+                    btn.classList.remove('text-slate-500', 'border-transparent');\
+                \} else \{\
+                    btn.classList.remove('active-tab', 'border-cyan-600', 'text-cyan-700');\
+                    btn.classList.add('text-slate-500', 'border-transparent');\
+                \}\
+            \});\
+        \};\
+\
+        const updateChart = () => \{\
+            if (!activeDepartment) return;\
+            \
+            const avg = categoryAverages[activeDepartment.category];\
+\
+            const data = \{\
+                labels: ['\uc0\u304 \u351  \u304 mkanlar\u305  (TR)', 'Gelece\u287 e Uygunluk (AI)', 'Yurt D\u305 \u351 \u305  Potansiyeli'],\
+                datasets: [\
+                    \{\
+                        label: activeDepartment.name,\
+                        data: [activeDepartment.scores.tr, activeDepartment.scores.ai, activeDepartment.scores.intl],\
+                        backgroundColor: 'rgba(8, 145, 178, 0.2)',\
+                        borderColor: 'rgba(8, 145, 178, 1)',\
+                        pointBackgroundColor: 'rgba(8, 145, 178, 1)',\
+                        pointBorderColor: '#fff',\
+                        pointHoverBackgroundColor: '#fff',\
+                        pointHoverBorderColor: 'rgba(8, 145, 178, 1)',\
+                        borderWidth: 2\
+                    \},\
+                    \{\
+                        label: `$\{activeDepartment.category\} Ortalamas\uc0\u305 `,\
+                        data: [avg.tr, avg.ai, avg.intl],\
+                        backgroundColor: 'rgba(100, 116, 139, 0.2)',\
+                        borderColor: 'rgba(100, 116, 139, 1)',\
+                        pointBackgroundColor: 'rgba(100, 116, 139, 1)',\
+                        pointBorderColor: '#fff',\
+                        pointHoverBackgroundColor: '#fff',\
+                        pointHoverBorderColor: 'rgba(100, 116, 139, 1)',\
+                        borderWidth: 1.5,\
+                        borderDash: [5, 5]\
+                    \}\
+                ]\
+            \};\
+            \
+            const config = \{\
+                type: 'radar',\
+                data: data,\
+                options: \{\
+                    responsive: true,\
+                    maintainAspectRatio: false,\
+                    scales: \{\
+                        r: \{\
+                            angleLines: \{ color: 'rgba(0,0,0,0.1)' \},\
+                            grid: \{ color: 'rgba(0,0,0,0.1)' \},\
+                            pointLabels: \{\
+                                font: \{\
+                                    size: 11\
+                                \},\
+                                color: '#475569'\
+                            \},\
+                            ticks: \{\
+                                backdropColor: 'transparent',\
+                                color: '#64748b',\
+                                stepSize: 2\
+                            \},\
+                            suggestedMin: 0,\
+                            suggestedMax: 10\
+                        \}\
+                    \},\
+                    plugins: \{\
+                        legend: \{\
+                            position: 'top',\
+                             labels: \{\
+                                color: '#334155'\
+                            \}\
+                        \}\
+                    \}\
+                \}\
+            \};\
+\
+            if (chart) \{\
+                chart.destroy();\
+            \}\
+            chart = new Chart(document.getElementById('departmentChart'), config);\
+        \};\
+        \
+        filterButtons.forEach(button => \{\
+            button.addEventListener('click', () => \{\
+                const filter = button.dataset.filter;\
+                renderDepartments(filter);\
+                \
+                filterButtons.forEach(btn => btn.classList.remove('active-filter'));\
+                button.classList.add('active-filter');\
+            \});\
+        \});\
+        \
+        tabButtons.forEach(button => \{\
+           button.addEventListener('click', () => \{\
+               showTabContent(button.dataset.tab);\
+           \});\
+        \});\
+\
+        renderDepartments();\
+    </script>\
+\
+</body>\
+</html>\
+}
